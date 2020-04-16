@@ -1,6 +1,8 @@
 # dotfiles
 My ArchLinux dotfiles
 
+![alt text](https://raw.githubusercontent.com/toolreaz/dotfiles/master/preview.png)
+
 - Os: Arch Linux
 - WM: i3
 - Theme: Arc-Dark
