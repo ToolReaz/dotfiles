@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=toolreaz-custom
+Description=toolreaz-custom
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/toolreaz-custom
+ScriptFile=/usr/share/plymouth/themes/toolreaz-custom/toolreaz-custom.script
