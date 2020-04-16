@@ -150,13 +150,13 @@ exec_always "xinput set-prop 15 345 1"
 exec_always --no-startup-id nm-applet
 
 # Polybar
-exec_always --no-startup-id sh /home/toolreaz/.config/polybar/launch.sh
+exec_always --no-startup-id sh ~/.config/polybar/launch.sh
 
 # Feh wallpaper
-exec_always feh --bg-scale /home/toolreaz/Images/bg.png
+exec_always feh --bg-scale ~/Images/bg.png
 
 # Picom
-exec_always --no-startup-id picom -bC --config /home/toolreaz/.config/picom/config.conf
+exec_always --no-startup-id picom -bC --config ~/.config/picom/config.conf
 
 
 
@@ -166,7 +166,7 @@ exec_always --no-startup-id picom -bC --config /home/toolreaz/.config/picom/conf
 bindsym $mod+m exec rofi -show drun
 
 # i3lock
-bindsym $mod+l exec sh /home/toolreaz/.config/i3/lock.sh
+bindsym $mod+l exec sh ~/.config/i3/lock.sh
 
 # Firefox
 bindsym $mod+o exec firefox-developer-edition
@@ -184,5 +184,5 @@ bindsym $mod+Return exec termite
 bindsym $mod+c kill
 
 # Flameshot
-bindsym $mod+Shift+Return exec "flameshot gui --path /home/toolreaz/Images/Screenshots"
+bindsym $mod+Shift+Return exec "flameshot gui --path ~/Images/Screenshots"
 
