@@ -1,7 +1,5 @@
 /*
  * ROFI Color theme
- * A red variation of Arc-Dark theme by leofa, based on arc-theme-Red (https://github.com/mclmza/arc-theme-Red)
- * User: wikwg9
  */
 * {
     selected-normal-foreground:  rgba ( 249, 249, 249, 100 % );
