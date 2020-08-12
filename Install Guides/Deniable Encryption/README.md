@@ -3,6 +3,17 @@
 ## Prepare installation media
 Follow official wiki: https://wiki.archlinux.org/index.php/Installation_guide#Pre-installation
 
+## Connect to WiFi
+As explained here: https://wiki.archlinux.org/index.php/Iwd#iwctl
+```
+iwctl
+device list
+station device scan
+station device get-networks
+station device connect SSID
+quit
+```
+
 ## Format external media
 In my case i use an SDcard (mmcblkX) but you can use USB drive (sdX)
 
