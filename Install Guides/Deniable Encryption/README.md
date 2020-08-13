@@ -1,4 +1,4 @@
-# HOW TO - ArchLinux install with encryptedf LUKS header and boot partition on removable media (UEFI)
+# HOW TO - ArchLinux install with plain dm-crypt and boot partition with key on removable media (UEFI)
 
 ## Prepare installation media
 Follow official wiki: https://wiki.archlinux.org/index.php/Installation_guide#Pre-installation
