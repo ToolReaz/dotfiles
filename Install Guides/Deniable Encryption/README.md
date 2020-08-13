@@ -21,8 +21,6 @@ In my case i use an SDcard (mmcblkX) but you can use USB drive (sdX)
 
 Create the partitions as follow:
 ```
-(IF YOU NEED IT) EFI Partition: Size: 100M, Hex Code: ef00, Name: ESP
-
 BOOT Partition: Size: 1G, Hex Code: ef00, Name: BOOT
 
 KEY Partition: Size: 200M, Hex Code: default (8300), Name: <name or nothing>
@@ -110,7 +108,7 @@ Install grub: ``grub-install --target=x86_64-efi --efi-directory=/boot --bootloa
 
 Edit file ``/etc/default/grub`` and et the following values:
 ```
-GRUB_CMDLIN_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p2:4096:64 crypto=:aes-xts-plain64:512:0: quiet"
+GRUB_CMD_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p2:4096:64 crypto=:aes-xts-plain64:512:0: quiet"
 ```
 Then run: ``grub-mkconfig -o /boot/grub/grub.cfg``
 
