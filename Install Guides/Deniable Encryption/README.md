@@ -21,9 +21,11 @@ In my case i use an SDcard (mmcblkX) but you can use USB drive (sdX)
 
 ## Create the partitions as follow:
 ```
-EFI Partition: Size: 100M, Hex Code: ef00, Name: ESP
+(IF YOU NEED IT) EFI Partition: Size: 100M, Hex Code: ef00, Name: ESP
 
-BOOT Partition: 1G, Hex Code: default (8300), Name: Boot
+BOOT Partition: Size: 1G, Hex Code: ef00, Name: BOOT
+
+KEY Partition: Size: 200M, Hex Code: default (8300), Name: <name or nothing>
 
 Storage on remaining space (optional): Hex Code: default (8300), Name: Storage
 ```
@@ -33,38 +35,30 @@ Storage on remaining space (optional): Hex Code: default (8300), Name: Storage
 mkfs.fat -F32 /dev/mmcblk0p3
 ```
 
-## Encrypt BOOT partition:
+## Format BOOT partition:
 ```
-cryptsetup luksFormat /dev/mmcblk0p2
-cryptsetup open /dev/mmcblk0p2 cryptboot
-mkfs.vfat /dev/mapper/cryptboot
+mkfs.fat -F32 /dev/mmcblk0p1
 ```
 
+## Prepare KEY partition:
 ```
-mount /dev/mapper/cryptboot /mnt
-dd if=/dev/urandom of=/mnt/key.img bs=64M count=1
-cryptsetup luksFormat /mnt/key.img
-cryptsetup open /mnt/key.img lukskey
+dd if=/dev/urandom of=/dev/mmcblk0p2 status=progress
 ```
 
-## Main drive
-
+## Prepare the main disk:
 ```
-truncate -s 16M /mnt/header.img
-cryptsetup --key-file=/dev/mapper/lukskey --keyfile-offset=offset --keyfile-size=8192 luksFormat /dev/sda --offset 32768 --header /mnt/header.img
+cryptsetup --cipher=aes-xts-plain64 --offset=0 --key-file=/dev/mmcblk0p2 --keyfile-offset=4096 --key-size=512 open --type plain /dev/sda cryptroot 
 
-Pick an offset and size in bytes (8192 bytes is the maximum keyfile size for cryptsetup).
-
-cryptsetup open --header /mnt/header.img --key-file=/dev/mapper/lukskey --keyfile-offset=offset --keyfile-size=size /dev/sda enc 
-cryptsetup close lukskey
-umount /mnt
-```
-
-```
 mkfs.ext4 /dev/mapper/cryptroot
+```
+
+## Mount filesystem tree
+```
 mount /dev/mapper/cryptroot /mnt
+
 mkdir /mnt/boot
-mount /dev/mapper/cryptboot /mnt/boot
+
+mount /dev/mmcblk0p1 /mnt/boot
 ```
 
 ## Installation procedure
@@ -98,36 +92,27 @@ nano /etc/hosts
 passwd
 
 useradd -m -G wheel -s /bin/bash username
-passwrd toolreaz
+passwd toolreaz
+
 EDITOR=nano visudo
 Uncomment line %wheel ALL=(ALL) ALL
 ```
 
 ## Encrypt hook
+Edit file ``/etc/mkinitcpio.conf`` and et the following values:
 ```
-ls /dev/disk/by-id/sda >> /etc/initcpio/hooks/customencrypthook
-ls /dev/disk/by-id/mmcblk0-part2 >> /etc/initcpio/hooks/customencrypthook
-nano /etc/initcpio/hooks/customencrypthook
-cp /usr/lib/initcpio/install/encrypt /etc/initcpio/install/customencrypthook
-
-nano /etc/mkinitcpio.conf
-MODULES=(loop)
-HOOKS=(base udev autodetect keyboard keymap modconf block customencrypthook filesystems fsck)
-
-mkinitcpio -P
+HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt filesystems fsck)
 ```
+Then rebuild initramfs: ``mkinitcpio -P``
 
 ## Boot manager
-```
-grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id="MYGRUB"
+Install grub: ``grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id="GRUB"``
 
-nano /etc/default/grub
-GRUB_ENABLE_CRYPTODISK=y
-#GRUB_CMDLINE_LINUX_DEFAULT=...
-GRUB_CMDLIN_LINUX="cryptdevice=/dev/sda:cryuptroot root=/dev/mapper/cryptroot quiet"
-
-grub-mkconfig -o /boot/grub/grub.cfg
+Edit file ``/etc/default/grub`` and et the following values:
 ```
+GRUB_CMDLIN_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p2:4096:64 crypto=:aes-xts-plain64:512:0: quiet"
+```
+Then run: ``grub-mkconfig -o /boot/grub/grub.cfg``
 
 ## Finish
 ```
@@ -135,22 +120,3 @@ exit
 umount -R /mnt
 reboot
 ```
-
-
-
-
-
-mount /dev/mmcblk0p1 /mnt
-truncate -s 16M /mnt/header.img
-dd if=/dev/urandom of=/mnt/key.img bs=64M count=1
-
-cryptsetup --key-file=/mnt/key.img --keyfile-offset=4096 --keyfile-size=8192 luksFormat /dev/sda --header /mnt/header.img
-
-cryptsetup open --header /mnt/header.img --key-file=/mnt/key.img --keyfile-offset=4096 --keyfile-size=8192 /dev/sda cryptroot
-
-umount /mnt
-mkfs.ext4 /dev/mapper/cryptroot
-mount /dev/mapper/cryptroot /mnt
-mkdir /mnt/boot
-mount /dev/mmcblk0p1 /mnt/boot
-
