@@ -97,7 +97,7 @@ Uncomment line %wheel ALL=(ALL) ALL
 ```
 
 ## Encrypt hook
-Edit file ``/etc/mkinitcpio.conf`` and et the following values:
+Edit file ``/etc/mkinitcpio.conf`` and change the following values:
 ```
 HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt filesystems fsck)
 ```
@@ -106,7 +106,7 @@ Then rebuild initramfs: ``mkinitcpio -P``
 ## Boot manager
 Install grub: ``grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id="GRUB"``
 
-Edit file ``/etc/default/grub`` and et the following values:
+Edit file ``/etc/default/grub`` and change the following values:
 ```
 GRUB_CMD_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p2:4096:64 crypto=:aes-xts-plain64:512:0: quiet"
 ```
