@@ -2,6 +2,24 @@
 
 In this guide ``sda`` will refer to the main computer's hard drive on which I install the encrypted system. ``mmcblk0`` will refer to a SD card containing the encryption key and the boot loader (but you can use an USB stick and replace with ``sdb``).
 
+## Summary
+- [Prerequistes](#prerequistes)
+  + [Prepare installation media](#prepare-installation-media)
+  + [Prepare the computer](#prepare-the-computer)
+  + [Set keymap](#set-keymap)
+  + [Connect to WiFi](#connect-to-wifi)
+- [Preparing drives](#preparing-drives)
+  + [Format external media](#format-external-media)
+  + [Format partitions](#format-partitions)
+  + [Create the encryption key](#create-the-encryption-key)
+  + [Prepare the main disk](#prepare-the-main-disk)
+  + [Mount filesystem tree](#mount-filesystem-tree)
+  + [Installation procedure](#installation-procedure)
+  + [Encrypt hook](#encrypt-hook)
+  + [Boot manager](#boot-manager)
+  + [Finish](#finish)
+- [Troubleshooting](#troubleshooting)
+
 ## Prerequistes
 ### Prepare installation media
 Follow official wiki: https://wiki.archlinux.org/index.php/Installation_guide#Pre-installation
