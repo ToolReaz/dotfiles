@@ -6,7 +6,7 @@ First, get the OfficeSetup.exe in 32 bits format.
 
 Requiered packages:
 ```bash
-sudo pacman -S cabextract zenity
+sudo pacman -S wine wine-mono wine-gecko cabextract zenity ttf-caladea ttf-carlito samba lib32-libxinerama lib32-libxcomposite
 ```
 Setup wine:
 ```bash
