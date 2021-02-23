@@ -49,9 +49,27 @@ cfdisk /dev/mmcblk0
 ```
 Create the partition as follow:
 ```
-/dev/mmcblk0p1    size 1G, type ef00, name BOOT
-/dev/mmcblk0p2    size 200M, type default, name <none or like you want>
-/dev/mmcblk0p3    *OPTIONAL* size <remaining space>, type linux filesystem, name STORAGE
+/dev/mmcblk0p1    size 100M, type ef00, name EFI
+/dev/mmcblk0p2    size 500M, type default, name BOOT
+/dev/mmcblk0p3    size 200M, type default, name <none or like you want>
+/dev/mmcblk0p4    *OPTIONAL* size <remaining space>, type linux filesystem, name STORAGE
+```
+
+Generate encryption key for main drive
+```bash
+dd if=/dev/urandom of=/dev/mmcblk0p3 status=progress
+```
+
+Encrypt boot partition
+```bash
+cryptsetup luksFormat --type luks1 /dev/mmcblk0p2
+cryptsetup open /dev/mmcblk0p2 cryptboot
+```
+
+Format partitions
+```bash
+mkfs.fat -F32 /dev/mmcblk0p1
+mkfs.fat -F32 /dev/mapper/cryptboot
 ```
 
 ### Main drive
@@ -68,7 +86,10 @@ mkfs.ext4 /dev/mapper/cryptroot
 mount /dev/mapper/cryptroot /mnt/gentoo
 
 mkdir /mnt/gentoo/boot
-mount /dev/mmcblkp1 /mnt/gentoo/boot
+mount /dev/mapper/cryptboot /mnt/gentoo/boot
+
+mkdir /mnt/gentoo/boot/efi
+mount /dev/mmcblk0p1 /mnt/gentoo/boot/efi
 ```
 ```bash
 
