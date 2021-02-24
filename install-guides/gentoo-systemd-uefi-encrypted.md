@@ -274,17 +274,19 @@ The following kernel options are required for this setup:
 - dmcrypt
 - USB/SD card/removable device support
 
-
+Then save and compile (adapt the numbrer of jobs depending on your number of cores and RAM size)
 ```bash
-
+make -j4
 ```
 
+Install modules
 ```bash
-
+make modules_install
 ```
 
+Install kernel
 ```bash
-
+make install
 ```
 
 ```bash
