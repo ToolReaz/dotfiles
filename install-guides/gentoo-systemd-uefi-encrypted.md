@@ -252,6 +252,7 @@ emerge --ask sys-fs/cryptsetup
 
 Generate a new keyfile for boot partition
 ```bash
+dd if=/dev/urandom of=/root/boot.key bs=1M count=1
 cryptsetup luksAddKey /dev/mmcblk0p2 /root/boot.key
 ```
 
