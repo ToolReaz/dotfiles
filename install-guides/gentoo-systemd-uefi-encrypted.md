@@ -245,6 +245,17 @@ And put the following
 ```
 
 ### Crypttab
+Install cryptsetup
+```bash
+emerge --ask sys-fs/cryptsetup
+```
+
+Generate a new keyfile for boot partition
+```bash
+cryptsetup luksAddKey /dev/mmcblk0p2 /root/boot.key
+```
+
+Edit crypttab
 ```bash
 nano -w /etc/crypttab
 ```
