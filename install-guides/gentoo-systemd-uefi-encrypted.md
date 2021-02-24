@@ -82,7 +82,7 @@ mkfs.fat -F32 /dev/mapper/cryptboot
 
 ### Main drive
 ```bash
-cryptsetup --cipher=aes-xts-plain64 --offset=<number> --key-file=/dev/mmcblk0p2 --keyfile-offset=<number> --key-size=512 open --type plain /dev/sda cryptroot
+cryptsetup --cipher=aes-xts-plain64 --offset=<number> --key-file=/dev/mmcblk0p3 --keyfile-offset=<number> --key-size=512 open --type plain /dev/sda cryptroot
 ```
 
 ```bash
