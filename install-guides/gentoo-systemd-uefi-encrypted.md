@@ -96,12 +96,8 @@ mount /dev/mapper/cryptroot /mnt/gentoo
 mkdir /mnt/gentoo/boot
 mount /dev/mapper/cryptboot /mnt/gentoo/boot
 
-mkdir /mnt/gentoo/boot/efi
+mkdir /mnt/gentoo/boot/EFI
 mount /dev/mmcblk0p1 /mnt/gentoo/boot/EFI
-
-mount -t proc /proc /mnt/gentoo/proc
-mount --rbind /dev /mnt/gentoo/dev
-mount --rbind /sys /mnt/gentoo/sys
 ```
 
 ## Install system
@@ -156,6 +152,13 @@ cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos
 You can copy the LiveCD DNS settings or just edit ``/etc/resolv.conf`` yourself.
 ```bash
 cp -L /etc/resolv.conf /mnt/gentoo/etc/
+```
+
+### Mount additional tree
+```bash
+mount -t proc /proc /mnt/gentoo/proc
+mount --rbind /dev /mnt/gentoo/dev
+mount --rbind /sys /mnt/gentoo/sys
 ```
 
 ### Chroot
