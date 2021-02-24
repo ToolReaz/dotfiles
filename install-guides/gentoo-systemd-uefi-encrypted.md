@@ -97,7 +97,7 @@ mkdir /mnt/gentoo/boot
 mount /dev/mapper/cryptboot /mnt/gentoo/boot
 
 mkdir /mnt/gentoo/boot/efi
-mount /dev/mmcblk0p1 /mnt/gentoo/boot/efi
+mount /dev/mmcblk0p1 /mnt/gentoo/boot/EFI
 
 mount -t proc /proc /mnt/gentoo/proc
 mount --rbind /dev /mnt/gentoo/dev
