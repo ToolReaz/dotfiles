@@ -1,6 +1,6 @@
 # Gentoo Systemd UEFI Encrypted
 
-[WIP logo](https://img.shields.io/badge/STAUS-WORK%20IN%20PROGRESS-red?style=for-the-badge&logo=gentoo)
+![WIP logo](https://img.shields.io/badge/STAUS-WORK%20IN%20PROGRESS-red?style=for-the-badge&logo=gentoo)
 
 ## Features
 - UEFI partition
