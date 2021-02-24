@@ -45,9 +45,10 @@ dd if=/dev/urandom of=/dev/sda bs=4M status=progress
 If you use a wired connection it should work out of the box.
 Otherwise if you are using WiFi you can use ``net-setup``.
 
-### *TIPS* SSH
+### *TIPS SSH*
 You can do the installation remotely. It can be usefull for copy/pasting the commands from this tutorial.
-Simply configure the root password with ``passwd`` command then print the IP address with ``ip a`` and connect from your remote machine.
+Simply configure the root password with ``passwd`` command then print the IP address with ``ip a`` and finaly start the ssh daemon ``/etc/init.d/sshd start``.
+Now you can connect from your remote machine.
 
 ## Paritionning
 ### Removable device
