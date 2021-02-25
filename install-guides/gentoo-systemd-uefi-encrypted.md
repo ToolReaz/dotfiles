@@ -51,7 +51,16 @@ dd if=/dev/urandom of=/dev/sda bs=4M status=progress
 
 ### Connect to internet
 If you use a wired connection it should work out of the box.
-Otherwise if you are using WiFi you can use ``net-setup``.
+Otherwise if you are using WiFi you can use ``net-setup`` on Gentoo CD.
+On Archlinux CD use:
+```bash
+iwctl
+device list
+station <device> scan
+station <device> get-networks
+station <device> connect <SSID>
+quit
+```
 
 ### *TIPS SSH*
 You can do the installation remotely. It can be usefull for copy/pasting the commands from this tutorial.
