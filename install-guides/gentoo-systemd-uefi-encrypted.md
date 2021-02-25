@@ -13,13 +13,21 @@
 
 ## Drives layout used in this guide
 ```
-/dev/sda        Main drive, encrypted using dm-crypt in plain mode
-/dev/mmcblk0    Removable device used for encrypted boot partition and key
++-------------------------+ +----------------+-----------------------+-----------------+------------------+
+| Root partition          | | EFI partition  | Boot partition        | Key of /dev/sda | Optional storage |
+|                         | |                |                       |                 |                  |
+| /                       | | /boot/efi      | /boot                 |                 |                  |
+|                         | |                |                       |                 |                  |
+| /dev/mapper/cryptroot   | | /dev/mmcblk0p1 | /dev/mapper/cryptboot | /dev/mmcblk0p3  | /dev/mmcblk0p4   |
+|-------------------------| |----------------------+----------------------+-------------------------------|
+| /dev/sda dm-crypt plain | | Removable SD card /dev/mmcblk0                                              |
++-------------------------+ +-----------------------------------------------------------------------------+
 ```
 
 ## Preparations
 ### Installation media
-First download the live installation CD on https://www.gentoo.org/downloads/ .
+I actually prefer installing Gentoo using the Archlinux live CD because it's more convinient and provided useful tools such as: genfstab, arch-root, systemd.
+First download the live installation CD.
 Flash the iso file onto an USB.
 Then boot **in EFI mode** on it.
 
