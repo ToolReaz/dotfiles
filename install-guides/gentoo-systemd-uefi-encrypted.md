@@ -70,7 +70,7 @@ Now you can connect from your remote machine.
 ## Paritionning
 ### Removable device
 ```bash
-cfdisk /dev/mmcblk0
+cgdisk /dev/mmcblk0
 ```
 Create the partition as follow:
 ```
@@ -108,32 +108,31 @@ mkfs.ext4 /dev/mapper/cryptroot
 
 ## Mount filesystem tree
 ```bash
-mount /dev/mapper/cryptroot /mnt/gentoo
+mount /dev/mapper/cryptroot /mnt
 
-mkdir /mnt/gentoo/boot
-mount /dev/mapper/cryptboot /mnt/gentoo/boot
+mkdir /mnt/boot
+mount /dev/mapper/cryptboot /mnt/boot
 
-mkdir /mnt/gentoo/boot/EFI
-mount /dev/mmcblk0p1 /mnt/gentoo/boot/EFI
+mkdir /mnt/boot/efi
+mount /dev/mmcblk0p1 /mnt/boot/efi
 ```
 
 ## Install system
 
 ### Get the stage3
 ```bash
-cd /mnt/gentoo
+cd /mnt
 ```
 
 ```bash
-wget https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20210221T214504Z/stage3-amd64-systemd-20210221T214504Z.tar.xz
+wget <your desired stage3 archive>
 
 tar xJvpf stage3-*.tar.xz --xattrs
 ```
-*Update the link with a more recent version*
 
 ### Configure portage
 ```bash
-nano -w /mnt/gentoo/etc/portage/make.conf
+nano -w /mnt/etc/portage/make.conf
 ```
 
 Set the compile flags
@@ -157,41 +156,23 @@ EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --quiet-build=y" # Remove verbose co
 
 ### Select mirrors
 ```bash
-mirrorselect -i -o >> /mnt/gentoo/etc/portage/make.conf
+mirrorselect -i -o >> /mnt/etc/portage/make.conf
 ```
 Then copy Gentoo repo list
 ```bash
-mkdir -p /mnt/gentoo/etc/portage/repos.conf
-cp /mnt/gentoo/usr/share/portage/config/repos.conf /mnt/gentoo/etc/portage/repos.conf/gentoo.conf
+mkdir -p /mnt/etc/portage/repos.conf
+cp /mnt/usr/share/portage/config/repos.conf /mnt/etc/portage/repos.conf/gentoo.conf
 ```
 
-### Setup DNS
-You can copy the LiveCD DNS settings or just edit ``/etc/resolv.conf`` yourself.
+### Generate fstab
 ```bash
-cp -L /etc/resolv.conf /mnt/gentoo/etc/
-```
-
-### Mount additional tree
-```bash
-mount -t proc /proc /mnt/gentoo/proc
-mount --rbind /dev /mnt/gentoo/dev
-mount --rbind /sys /mnt/gentoo/sys
+genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
 ### Chroot
 Chroot in the new system
 ```bash
-chroot /mnt/gentoo /bin/bash
-```
-
-Update environment variables
-```bash
-env-update && source /etc/profile
-```
-
-*OPTIONAL* Customize prompt to show that we are chrooted
-```bash
-export PS1="[chroot] $PS1"
+arch-chroot /mnt
 ```
 
 ### Portage
@@ -250,17 +231,6 @@ emerge --config sys-libs/timezone-data
 
 You can check date with the ``date `` command.
 
-### Fstab
-```bash
-nano -w /etc/fstab
-```
-And put the following
-```
-/dev/mapper/cryptroot      /               ext4            defaults,noatime         0 1
-/dev/mapper/cryptboot      /boot           vfat            defaults,noatime         0 0
-/dev/mmcblk0p1             /boot/EFI       vfat            defaults                 0 0
-```
-
 ### Crypttab
 Install cryptsetup
 ```bash
@@ -271,6 +241,7 @@ Generate a new keyfile for boot partition
 ```bash
 dd if=/dev/urandom of=/root/boot.key bs=1M count=1
 cryptsetup luksAddKey /dev/mmcblk0p2 /root/boot.key
+chmod 400 /root/boot.key
 ```
 
 Edit crypttab
@@ -280,7 +251,7 @@ nano -w /etc/crypttab
 And put the following
 ```
 # Mount /dev/mmcblk0p2 as /dev/mapper/boot using LUKS, with a passphrase stored in a file.
-boot /dev/mmcblk0p2       /root/boot.key
+boot /dev/mmcblk0p2 /root/boot.key luks
 ```
 
 ### Kernel
@@ -326,9 +297,17 @@ Install kernel
 make install
 ```
 
+### Initramfs
+
+// TODO
+
 ```bash
 
 ```
+
+### Grub
+
+// TODO
 
 ```bash
 
