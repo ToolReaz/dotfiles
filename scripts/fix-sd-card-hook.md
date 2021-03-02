@@ -6,14 +6,16 @@ Create file ``/etc/initcpio/install/fixsdcard`` with this content:
 
 build() {
 
-        rmmod sdhci_pci
-        rmmod sdhci
-        modprobe sdhci debug_quirks2="0x80000000"
-        modprobe sdhci_pci
+        add_module sdhci debug_quirks2="0x80000000"
+        add_module sdhci_pci
 
 }
 
-help() {}
+help() {
+        cat <<HELPEOF
+This custom hook fix sd card reader on some laptop.
+HELPEOF
+}
 ```
 
 Then add this custom hook to mkinicpio config.
