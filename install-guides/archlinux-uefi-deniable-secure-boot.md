@@ -183,21 +183,16 @@ Edit file ``/etc/mkinitcpio.conf`` and change the following values:
 ```
 HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt filesystems fsck)
 ```
-Then rebuild initramfs: ``mkinitcpio -P``
+Then rebuild initramfs: ``mkinitcpio -p linux``
 
 ### Boot manager
-Install grub: ``grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id="MYGRUB"``
+Install grub: ``grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="MYGRUB"``
 
 > *WARNING: if you created a dedicated EFI partition use ``/boot/efi`` for efi-directory*
 
 Edit file ``/etc/default/grub`` and setup **GRUB_CMD_LINUX** like this:
 ```
-GRUB_CMD_LINUX="cryptdevice=<path>:<mapper-name> cryptkey=<path>:<keyfile-offset>:<key-size-in-bytes> crypto=<hash>:<cipher>:<key-size-in-bytes>:<offset>:<other> quiet"
-```
-
-With the values used before in this guide it's:
-```
-GRUB_CMD_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p2:4096:64 crypto=:aes-xts-plain64:512:0: quiet"
+GRUB_CMD_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p3:<key-offset>:64 crypto=:aes-xts-plain64:512:0: quiet"
 ```
 
 > *WARNING: notice that the key size is in **BYTES** not in **BITS** ! So you need to devide it by **8** !
