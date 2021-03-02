@@ -186,18 +186,22 @@ HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt fi
 Then rebuild initramfs: ``mkinitcpio -p linux``
 
 ### Boot manager
-Install grub: ``grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="MYGRUB"``
-
-> *WARNING: if you created a dedicated EFI partition use ``/boot/efi`` for efi-directory*
-
-Edit file ``/etc/default/grub`` and setup **GRUB_CMD_LINUX** like this:
+Configure grub by editing ``/etc/default/grub``
 ```
 GRUB_CMD_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p3:<key-offset>:64 crypto=:aes-xts-plain64:512:0: quiet"
+
+GRUB_ENABLE_CRYPTODISK=y
 ```
 
-> *WARNING: notice that the key size is in **BYTES** not in **BITS** ! So you need to devide it by **8** !
+Then generate the configuration
+```bash
+grub-mkconfig -o /boot/grub/grub.cfg
+```
 
-Then run: ``grub-mkconfig -o /boot/grub/grub.cfg``
+Then install Grub
+```bash
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="MYGRUB"
+```
 
 ### Finish
 Now you can exit the chroot, unmount everything and reboot.
@@ -206,59 +210,6 @@ Don't forget to remove installation media when rebooting !
 exit
 umount -R /mnt
 reboot
-```
-
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
 ```
 
 ```bash
