@@ -152,6 +152,7 @@ L10N="fr" #Langue
 VIDEO_CARDS="fbdev vesa intel i915 nvidia nouveau radeon amdgpu radeonsi virtualbox vmware" #Adatp with your grafic card. Keep fbdev et vesa.
 INPUT_DEVICES="libinput synaptics keyboard mouse evdev wacom"
 EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --quiet-build=y" # Remove verbose compilation output
+ACCEPT_LICENSE="*"
 ```
 
 ### Select mirrors
@@ -212,6 +213,7 @@ eselect locale set <choose the correct number>
 Configure keyboard layout for TTY (``keymap="fr"`` in my case)
 ```bash
 nano -w /etc/conf.d/keymaps
+echo "KEYMAP=fr-latin1" >> /etc/vconsole.conf
 ```
 
 Update environment
@@ -303,31 +305,51 @@ make install
 // TODO
 
 ```bash
+emerge --ask sys-kernel/genkernel
+genkernel --install --keymap --luks --mountboot --kernel-config=/usr/src/linux/.config initramfs
 
+```
+
+### Users
+
+```bash
+passwd
+
+useradd -m -G wheel -s /bin/bash myuser
+passwd myuser
+
+emerge --ask app-admin/sudo
+EDITOR=nano visudo
+Uncomment line %wheel ALL=(ALL) ALL
+```
+
+### Network
+```bash
+echo "myhostname" > /etc/hostname
+
+nano /etc/hosts
+127.0.0.1	localhost
+::1		    localhost
+127.0.1.1	myhostname.localdomain	myhostname
 ```
 
 ### Grub
 
-// TODO
-
 ```bash
-
+echo 'GRUB_PLATFORMS="efi-64"' >> /etc/portage/make.conf
+echo "sys-boot/grub:2 device-mapper fonts efiemu mount themes" > /etc/portage/package.use/custom.use
+emerge --ask --verbose sys-boot/grub:2
 ```
 
+Edit file ``/etc/default/grub``
 ```bash
-
+GRUB_CMD_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p3:<keyfile-offset>:64 crypto=:aes-xts-plain64:512:0: quiet"
+GRUB_ENABLE_CRYPTODISK=y
 ```
-
+Then
 ```bash
-
-```
-
-```bash
-
-```
-
-```bash
-
+grub-mkconfig -o /boot/grub/grub.cfg
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="MYGRUB"
 ```
 
 ```bash
