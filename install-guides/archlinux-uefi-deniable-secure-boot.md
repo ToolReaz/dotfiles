@@ -105,7 +105,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 
 ### Chroot into new system
 ```bash
-arch-root /mnt
+arch-chroot /mnt
 ```
 
 ### Set clock
@@ -173,8 +173,8 @@ nano -w /etc/crypttab
 ```
 And put the following
 ```
-# Mount /dev/mmcblk0p2 as /dev/mapper/boot using LUKS, with a passphrase stored in a file.
-boot /dev/mmcblk0p2 /root/boot.key luks
+# Mount /dev/mmcblk0p2 as /dev/mapper/cryptboot using LUKS, with a passphrase stored in a file.
+cryptboot /dev/mmcblk0p2 /root/boot.key luks
 ```
 
 
