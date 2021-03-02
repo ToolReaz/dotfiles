@@ -173,6 +173,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 Chroot in the new system
 ```bash
 arch-chroot /mnt
+source /etc/profile
 ```
 
 ### Portage
