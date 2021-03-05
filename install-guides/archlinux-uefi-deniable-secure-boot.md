@@ -109,7 +109,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 Don't forget to copy the key, we will need it later to put it in the initramfs.
 ```bash
 cp /rootkey /mnt/etc/
-chmod 400 /mnt/etc/bootkey
+chmod 400 /mnt/etc/rootkey
 ```
 
 ### Chroot into new system
@@ -198,19 +198,21 @@ Then rebuild initramfs: ``mkinitcpio -p linux``
 ### Boot manager
 Configure grub by editing ``/etc/default/grub``
 ```
-GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p3:<key-offset>:64 crypto=:aes-xts-plain64:512:0: quiet"
+GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=rootfs:/etc/rootkey:<key-offset>:64 crypto=:aes-xts-plain64:512:0: quiet"
 
 GRUB_ENABLE_CRYPTODISK=y
-```
 
-Then generate the configuration
-```bash
-grub-mkconfig -o /boot/grub/grub.cfg
+GRUB_DISABLE_LINUX_UUID=true
 ```
 
 Then install Grub
 ```bash
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="MYGRUB"
+```
+
+Then generate the configuration
+```bash
+grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 ### Finish
