@@ -1,6 +1,6 @@
 # Archlinux UEFI Encrypted with Secure Boot
 
-![WIP logo](https://img.shields.io/badge/STAUS-WIP-red?style=for-the-badge&logo=gentoo)
+![WIP logo](https://img.shields.io/badge/STAUS-WIP-red?style=for-the-badge&logo=archlinux)
 
 ## Features
 - UEFI
