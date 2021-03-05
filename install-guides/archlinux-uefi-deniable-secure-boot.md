@@ -5,7 +5,8 @@
 ## Features
 - UEFI
 - plain dm-crypt encryption on main drive
-- main disk encryption keyfile on removable device
+- main disk deniable encryption
+- encryption key stored in initramfs
 - encrypted boot partition on removable device
 - secure boot with signed kernel and boot loader
 
@@ -47,8 +48,7 @@ Create the partition as follow:
 ```
 /dev/mmcblk0p1    size 100M, type ef00, name EFI
 /dev/mmcblk0p2    size 1G, type default, name BOOT
-/dev/mmcblk0p3    size 200M, type default, name <none or like you want>
-/dev/mmcblk0p4    *OPTIONAL* size <remaining space>, type linux filesystem, name STORAGE
+/dev/mmcblk0p3    *OPTIONAL* size <remaining space>, type linux filesystem, name STORAGE
 ```
 
 Encrypt boot partition
@@ -61,7 +61,6 @@ Format partitions
 ```bash
 mkfs.fat -F32 /dev/mmcblk0p1
 mkfs.fat -F32 /dev/mapper/cryptboot
-
 mkfs.fat -F32 /dev/mmcblk0p3
 ```
 
@@ -97,7 +96,7 @@ Select mirrors: ``nano /etc/pacman.d/mirrorlist``
 
 ### Download base system and packages
 ```bash
-pacstrap /mnt base linux linux-firmware nano sudo grub efibootmgr git
+pacstrap /mnt base linux linux-firmware nano sudo grub efibootmgr git networkmanager
 ```
 
 ### Generate fstab
@@ -147,8 +146,8 @@ echo "myhostname" > /etc/hostname
 ```
 Configure local address by editing ``/etc/hosts`` and put this content
 ```bash
-127.0.0.1	localhost
-::1		    localhost
+127.0.0.1 localhost
+::1       localhost
 ```
 
 ### User
@@ -158,8 +157,8 @@ passwd
 ```
 Add a new user and change his password
 ```bash
-useradd -m -G wheel -s /bin/bash myuser
-passwd myuser
+useradd -m -G wheel -s /bin/bash toolreaz
+passwd toolreaz
 ```
 Add it in the sudoer file
 ```bash
@@ -190,7 +189,7 @@ cryptboot /dev/mmcblk0p2 /etc/bootkey luks
 ### Encrypt hook
 Edit file ``/etc/mkinitcpio.conf`` and change the following values:
 ```
-FILE=(/etc/rootkey)
+FILES=(/etc/rootkey)
 HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt filesystems fsck)
 ```
 Then rebuild initramfs: ``mkinitcpio -p linux``
