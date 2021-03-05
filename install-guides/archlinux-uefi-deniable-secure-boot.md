@@ -61,6 +61,8 @@ Format partitions
 ```bash
 mkfs.fat -F32 /dev/mmcblk0p1
 mkfs.fat -F32 /dev/mapper/cryptboot
+
+mkfs.fat -F32 /dev/mmcblk0p3
 ```
 
 ### Main drive
