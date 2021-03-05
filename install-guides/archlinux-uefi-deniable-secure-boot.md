@@ -51,11 +51,6 @@ Create the partition as follow:
 /dev/mmcblk0p4    *OPTIONAL* size <remaining space>, type linux filesystem, name STORAGE
 ```
 
-Generate encryption key for main drive
-```bash
-dd if=/dev/urandom of=/dev/mmcblk0p3 status=progress
-```
-
 Encrypt boot partition
 ```bash
 cryptsetup luksFormat --type luks1 /dev/mmcblk0p2
@@ -69,8 +64,13 @@ mkfs.fat -F32 /dev/mapper/cryptboot
 ```
 
 ### Main drive
+Generate encryption key for main drive
 ```bash
-cryptsetup --cipher=aes-xts-plain64 --offset=<number> --key-file=/dev/mmcblk0p3 --keyfile-offset=<number> --key-size=512 open --type plain /dev/sda cryptroot
+dd if=/dev/urandom of=/rootkey bs=1M count=1
+```
+And open the drive with it
+```bash
+cryptsetup --cipher=aes-xts-plain64 --offset=<number> --key-file=/rootkey --keyfile-offset=<number> --key-size=512 open --type plain /dev/sda cryptroot
 ```
 
 ```bash
@@ -101,6 +101,13 @@ pacstrap /mnt base linux linux-firmware nano sudo grub efibootmgr git
 ### Generate fstab
 ```bash
 genfstab -U /mnt >> /mnt/etc/fstab
+```
+
+### Copy rootkey
+Don't forget to copy the key, we will need it later to put it in the initramfs.
+```bash
+cp /rootkey /mnt/etc/
+chmod 400 /mnt/etc/bootkey
 ```
 
 ### Chroot into new system
@@ -162,9 +169,9 @@ Uncomment line %wheel ALL=(ALL) ALL
 ### Crypttab
 Generate a new keyfile for boot partition
 ```bash
-dd if=/dev/urandom of=/root/boot.key bs=1M count=1
-cryptsetup luksAddKey /dev/mmcblk0p2 /root/boot.key
-chmod 400 /root/boot.key
+dd if=/dev/urandom of=/etc/bootkey bs=1M count=1
+cryptsetup luksAddKey /dev/mmcblk0p2 /etc/bootkey
+chmod 400 /etc/bootkey
 ```
 
 Edit crypttab
@@ -174,13 +181,14 @@ nano -w /etc/crypttab
 And put the following
 ```
 # Mount /dev/mmcblk0p2 as /dev/mapper/cryptboot using LUKS, with a passphrase stored in a file.
-cryptboot /dev/mmcblk0p2 /root/boot.key luks
+cryptboot /dev/mmcblk0p2 /etc/bootkey luks
 ```
 
 
 ### Encrypt hook
 Edit file ``/etc/mkinitcpio.conf`` and change the following values:
 ```
+FILE=(/etc/rootkey)
 HOOKS=(base udev autodetect keyboard keymap consolefont modconf block encrypt filesystems fsck)
 ```
 Then rebuild initramfs: ``mkinitcpio -p linux``
@@ -188,7 +196,7 @@ Then rebuild initramfs: ``mkinitcpio -p linux``
 ### Boot manager
 Configure grub by editing ``/etc/default/grub``
 ```
-GRUB_CMD_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p3:<key-offset>:64 crypto=:aes-xts-plain64:512:0: quiet"
+GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=/dev/mmcblk0p3:<key-offset>:64 crypto=:aes-xts-plain64:512:0: quiet"
 
 GRUB_ENABLE_CRYPTODISK=y
 ```
