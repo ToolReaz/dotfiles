@@ -3,8 +3,11 @@
 
 ## Install package
 ```bash
-sudo pacman -S xorg i3-gaps lightdm lightdm-gtk-greeter rofi terminator wget curl unzip lxappearance feh bash-completion
+sudo pacman -S xorg i3-gaps lightdm lightdm-gtk-greeter rofi terminator wget curl unzip lxappearance feh bash-completion git base-devel
 ```
+
+## Yay package manager
+If you need package from AUR i recommend using [Yay](https://github.com/Jguer/yay).
 
 ## Display manager
 // Lightdm
@@ -37,6 +40,7 @@ EndSection
 ## Terminal
 
 ## Rofi
+// Use Dracula theme
 
 ## Theme
 I'm using [Dracula](https://draculatheme.com/) theme.
@@ -62,13 +66,22 @@ I use feh to display an image as wallpaper. I put this command in my i3 config f
 feh --bg-scale /path/to/image
 ```
 
-
+## File explorer
+I use Thunar.
 ``` bash
-
+sudo pacman -S thunar file-roller thunar-archive-plugin thunar-media-tags-plugin thunar-volman gvfs
 ```
+I had ``thunar --daemon`` at startup to make it open faster afterward and manage automounting USB.
+
+## Fonts
 ``` bash
-
+sudo pacman -S ttf-dejavu ttf-droid gnu-free-fonts ttf-liberation ttf-linux-libertine noto-fonts ttf-roboto ttf-ubuntu-font-family ttf-hack ttf-jetbrains-mono ttf-opensans noto-fonts-emoji
 ```
+
+
+
+
+
 ``` bash
 
 ```
