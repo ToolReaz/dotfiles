@@ -10,7 +10,7 @@
 ## Terminal
 
 ## Tools
-// wget curl unzip lxappearance
+// wget curl unzip lxappearance feh
 
 ## Rofi
 
@@ -32,9 +32,13 @@ sudo unzip Dracula.zip -d /usr/share/icons
 
 Then I use ``lxappearance`` to set the theme for both the user and root.
 
+## Wallpaper
+I use feh to display an image as wallpaper. I put this command in my i3 config file:
 ``` bash
-
+feh --bg-scale /path/to/image
 ```
+
+
 ``` bash
 
 ```
