@@ -1,16 +1,40 @@
 # Custom i3-gaps desktop environment
 
+
+## Install package
+```bash
+sudo pacman -S xorg i3-gaps lightdm lightdm-gtk-greeter rofi terminator wget curl unzip lxappearance feh bash-completion
+```
+
 ## Display manager
 // Lightdm
 
 ## Xorg
+### Keyboard
+```
+# /etc/X11/xorg.conf.d/10-keyboard.conf
+Section "InputClass"
+        Identifier "system-keyboard"
+        MatchIsKeyboard "on"
+        Option "XkbLayout" "fr"
+        Option "XkbModel" "pc105"
+EndSection
+```
+### Touchpad
+```
+# /etc/X11/xorg.conf.d/30-touchpad.conf
+Section "InputClass"
+    Identifier "AlpsPS/2 ALPS GlidePoint"
+    MatchIsTouchpad "on"
+    Driver "libinput"
+    Option "Tapping" "on"
+    Option "ClickMethod" "clickfinger"
+EndSection
+```
 
 ## Window manager
 
 ## Terminal
-
-## Tools
-// wget curl unzip lxappearance feh
 
 ## Rofi
 
