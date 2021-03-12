@@ -10,7 +10,7 @@
 ## Terminal
 
 ## Tools
-// wget curl unzip
+// wget curl unzip lxappearance
 
 ## Rofi
 
@@ -29,6 +29,9 @@ Installing the icon theme
 wget https://github.com/dracula/gtk/files/5214870/Dracula.zip
 sudo unzip Dracula.zip -d /usr/share/icons
 ```
+
+Then I use ``lxappearance`` to set the theme for both the user and root.
+
 ``` bash
 
 ```
