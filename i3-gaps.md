@@ -12,18 +12,22 @@
 ## Tools
 // wget curl unzip
 
+## Rofi
+
 ## Theme
 I'm using [Dracula](https://draculatheme.com/) theme.
 
-Download it
+Installing the GTK theme
 ``` bash
 wget https://github.com/dracula/gtk/archive/master.zip
 sudo unzip master.zip -d /usr/share/themes
 sudo mv /usr/share/themes/gtk-master /usr/share/themes/Dracula
 ```
 
+Installing the icon theme
 ``` bash
-
+wget https://github.com/dracula/gtk/files/5214870/Dracula.zip
+sudo unzip Dracula.zip -d /usr/share/icons
 ```
 ``` bash
 
@@ -48,7 +52,8 @@ sudo mv /usr/share/themes/gtk-master /usr/share/themes/Dracula
 ```
 ``` bash
 
-`````` bash
+```
+``` bash
 
 ```
 ``` bash
