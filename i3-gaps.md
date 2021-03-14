@@ -91,7 +91,7 @@ sudo gpasswd -a toolreaz audio
 ```
 Then I install requiered packages:
 ``` bash
-sudo pacman -S alsa-utils alsa-plugins pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils vlc kmix bluedevil
+sudo pacman -S alsa-utils alsa-plugins pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils vlc kmix bluedevil pavucontrol
 ```
 Then I copy the default config to my user directory and apply needed changes:
 ``` bash
