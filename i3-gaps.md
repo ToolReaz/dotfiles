@@ -81,7 +81,7 @@ sudo pacman -S ttf-dejavu ttf-droid gnu-free-fonts ttf-liberation ttf-linux-libe
 ## Status bar
 I use Polybar. It require this packages for my setup:
 ```bash
-sudo pacman -S
+sudo pacman -S lm-sensors
 ```
 
 ## Audio & Bluetooth
@@ -100,9 +100,24 @@ cp -r /etc/pulse ~/.config/pulse
 # ~/.config/pulse.daemon.conf
 daemonize = yes
 ```
-``` bash
 
+## Terminal
+I like using ``Termite`` because it is simple and easy to configure.
+``` bash
+wget https://github.com/dracula/termite/archive/master.zip
+unzip master.zip
+sudo pacman -S termite
+mkdir ~/config/termite
+cp termite-master/dracula ~/.config/termite/config
 ```
+Then I edit the config to change the font:
+```
+# ~/.config/termite/config
+[options]
+font = Hack 11
+```
+
+
 ``` bash
 
 ```
