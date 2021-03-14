@@ -37,8 +37,6 @@ EndSection
 
 ## Window manager
 
-## Terminal
-
 ## Rofi
 // Use Dracula theme
 
@@ -117,13 +115,23 @@ Then I edit the config to change the font:
 font = Hack 11
 ```
 
-
+## Network
 ``` bash
-
+sudo pacman -S nm-connection-editor network-manager-applet modemmanager mobile-broadband-provider-info usb_modeswitch
 ```
-``` bash
 
+## Screenshot
+```bash
+sudo pacman -S flameshot
 ```
-``` bash
 
+## Compositor
+I use ``picom`` as compositor to add transparency on some programs.
+``` bash
+sudo pacman -S picom
+```
+Copy the default config
+``` bash
+mkdir ~/.config/picom
+cp /etc/xdg/picom.conf ~/.config/picom/picom.conf
 ```
