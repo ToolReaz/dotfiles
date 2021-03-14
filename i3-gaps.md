@@ -78,18 +78,27 @@ I had ``thunar --daemon`` at startup to make it open faster afterward and manage
 sudo pacman -S ttf-dejavu ttf-droid gnu-free-fonts ttf-liberation ttf-linux-libertine noto-fonts ttf-roboto ttf-ubuntu-font-family ttf-hack ttf-jetbrains-mono ttf-opensans noto-fonts-emoji
 ```
 
-
-
-
-
-``` bash
-
+## Status bar
+I use Polybar. It require this packages for my setup:
+```bash
+sudo pacman -S
 ```
-``` bash
 
+## Audio & Bluetooth
+I first add my user in the audio group:
+``` bash
+sudo gpasswd -a toolreaz audio
 ```
+Then I install requiered packages:
 ``` bash
+sudo pacman -S alsa-utils alsa-plugins pulseaudio pulseaudio-alsa pulseaudio-bluetooth bluez bluez-utils vlc kmix bluedevil
+```
+Then I copy the default config to my user directory and apply needed changes:
+``` bash
+cp -r /etc/pulse ~/.config/pulse
 
+# ~/.config/pulse.daemon.conf
+daemonize = yes
 ```
 ``` bash
 
