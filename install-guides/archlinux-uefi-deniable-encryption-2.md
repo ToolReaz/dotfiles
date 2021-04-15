@@ -71,7 +71,7 @@ dd if=/dev/urandom of=/rootkey bs=1M count=1
 ```
 And open the drive with it
 ```bash
-cryptsetup --cipher=aes-xts-plain64 --offset=<number> --key-file=/rootkey --keyfile-offset=<number> --key-size=512 open --type plain /dev/sda cryptroot
+cryptsetup --cipher=aes-xts-plain64 --offset=<number> --key-file=/rootkey --key-size=512 open --type plain /dev/sda cryptroot
 ```
 
 ```bash
@@ -197,11 +197,9 @@ Then rebuild initramfs: ``mkinitcpio -p linux``
 ### Boot manager
 Configure grub by editing ``/etc/default/grub``
 ```
-GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=rootfs:/etc/rootkey:<key-offset>:64 crypto=:aes-xts-plain64:512:0: quiet"
+GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda:cryptroot cryptkey=rootfs:/etc/rootkey crypto=:aes-xts-plain64:512:0: quiet"
 
 GRUB_ENABLE_CRYPTODISK=y
-
-GRUB_DISABLE_LINUX_UUID=true
 ```
 
 Then install Grub
