@@ -26,7 +26,7 @@ Follow official wiki: https://wiki.archlinux.org/index.php/Installation_guide#Pr
 
 ### Prepare the computer
 Start the computer, enter in the BIOS menu and ensure those settings are correctly set:
-- Secure boot dezsibaled
+- Secure boot disabled
 - UEFI boot mode ena bled
 - Legacy boot disabled
 - USB  or SD card supports activated
