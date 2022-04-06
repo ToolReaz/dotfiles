@@ -1,4 +1,4 @@
-# HOW TO - ArchLinux deniable inscription install
+# HOW TO - ArchLinux deniable encryption install
 
 In this guide ``sda`` will refer to the main computer's hard drive on which I install the encrypted system. ``mmcblk0`` will refer to a SD card containing the encryption key and the boot loader (but you can use an USB stick and replace with ``sdb``).
 
