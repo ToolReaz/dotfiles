@@ -1,6 +1,6 @@
 #/bin/bash
 mkdir /mnt/gentoo
-mount /dev/mapper/cryptroot /mnt/gentoo
+mount /dev/mapper/root /mnt/gentoo
 mount /dev/nvme0n1p2 /mnt/gentoo/boot
 mount /dev/nvme0n1p1 /mnt/gentoo/boot/EFI
 
