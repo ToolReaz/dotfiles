@@ -1,4 +1,9 @@
 #/bin/bash
+mkdir /mnt/gentoo
+mount /dev/mapper/cryptroot /mnt/gentoo
+mount /dev/nvme0n1p2 /mnt/gentoo/boot
+mount /dev/nvme0n1p1 /mnt/gentoo/boot/EFI
+
 cp --dereference /etc/resolv.conf /mnt/gentoo/etc/
 
 mount --types proc /proc /mnt/gentoo/proc
