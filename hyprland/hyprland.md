@@ -32,6 +32,7 @@ Then add `exec-once = /usr/bin/dunst` to your Hyprland's config.
 ```bash
 sudo pacman -S waybar
 
+systemctl --user enable --now waybar.service
 ```
 
 ### App launchers
