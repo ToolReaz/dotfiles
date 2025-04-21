@@ -1,0 +1,80 @@
+{
+    "id": "mybar",
+    "layer": "top",
+    "output": "DP-1",
+    "position": "bottom",
+    "reload_style_on_change": true,
+    "exclusive": true,
+    "passthrough": false,
+    "modules-left": [
+        "hyprland/workspaces",
+        "hyprland/window"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "wireplumber",
+        "cpu",
+        "memory",
+        "tray"
+    ],
+    "clock": {
+        "timezone": "Europe/Paris",
+        "interval": 60,
+        "format": "<span>   </span>{:%H:%M}",
+        "format-alt": "{:%A  |  %I:%M  | %e %B}"
+    },
+    "cpu": {
+        "interval": 10,
+        "format": "<span>   </span>{usage}%",
+        "tooltip": false
+    },
+    "memory": {
+        "interval": 10,
+        "format": "<span>   </span>{used}GB"
+    },
+    "wireplumber": {
+        "format": "<span>    </span>{volume}%",
+        "format-muted": " ",
+        "scroll-step": 5,
+        "on-click": "bash -c 'wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle'",
+        "on-click-right": "helvum",
+        "max-volume": 100
+    },
+    "tray": {
+        "icon-size": 15,
+        "show-passive-items": true,
+        "spacing": 10
+    },
+    "hyprland/workspaces": {
+        "active-only": false,
+        "all-outputs": true,
+        "format": "{icon} {windows}",
+        "format-window-separator": " ",
+        "window-rewrite-default": " ",
+        "window-rewrite": {
+            "class<firefoxdeveloperedition>": " ",
+            "class<VSCodium>": " ",
+            "class<kitty>": " ",
+            "class<steam>": " ",
+            "class<discord>": " ",
+            "title<.*youtube.*>": " ",
+            "title<.*amazon.*>": " ",
+            "title<.*reddit.*>": " ",
+            "title<.*Picture-in-Picture.*>": " ",
+            "class<konsole>": " ",
+            "class<thunar>": "󰝰 ",
+            "class<subl>": "󰅳 ",
+            "class<celluloid>": " ",
+            "class<Cider>": "󰎆 ",
+            "class<code>": "󰨞 ",
+            "class<dev.zed.Zed-Preview>": " ",
+            "class<mpv>": " "
+        }
+    },
+    "hyprland/window": {
+        "format": "{title}",
+        "separate-outputs": true
+    }
+}

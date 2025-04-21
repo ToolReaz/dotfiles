@@ -27,7 +27,10 @@ cp /etc/dunst/dunstrc ~/.config/dunst/dunstrc
 
 Then add `exec-once = /usr/bin/dunst` to your Hyprland's config.
 
+### Waybar
+
 ```bash
+sudo pacman -S waybar
 
 ```
 
