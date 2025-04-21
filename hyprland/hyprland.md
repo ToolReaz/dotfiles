@@ -66,7 +66,7 @@ systemctl --user enable --now hyprpolkitagent.service
 ## TODO: Other
 
 ```bash
-sudo pacman -S pipewire wireplumber xdg-desktop-portal-hyprland discord
+sudo pacman -S pipewire wireplumber xdg-desktop-portal-hyprland discord hyprpaper
 
 # bash completion with sudo
 # in .basch:
