@@ -13,6 +13,21 @@ sudo echo 'setxkbmap <code>' >> /usr/share/sddm/scripts/Xsetup
 reboot
 ```
 
+Then for the theme
+Download theme zip here: https://github.com/catppuccin/sddm/releases 
+
+```bash
+pacman -Syu qt6-svg qt6-declarative qt5-quickcontrols2
+unzip catpuccin-theme.zip
+mv catpuccin-theme/ /usr/share/sddm/themes/
+```
+
+And add the folowing in the file ``/etc/sddm.conf`` (crete if not exist):
+```
+[Theme]
+Current=catppuccin-flavour
+```
+
 Don't forget to choose `hyprland (uwsm-managed)` entry in sddm selection menu.
 
 ## Must have
@@ -71,7 +86,7 @@ nano .config/kitty/kitty.conf # paste config from dotfiles
 ## TODO: Other
 
 ```bash
-sudo pacman -S pipewire wireplumber xdg-desktop-portal-hyprland discord hyprpaper git
+sudo pacman -S pipewire wireplumber xdg-desktop-portal-hyprland discord hyprpaper git zip unzip
 
 # bash completion with sudo
 # in .basch:
