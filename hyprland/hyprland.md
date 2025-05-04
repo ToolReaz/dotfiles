@@ -51,12 +51,17 @@ sudo pacman -S hyprpolkitagent
 systemctl --user enable --now hyprpolkitagent.service
 ```
 
+### Yay + VS Codium
 ```bash
-
+sudo pacman -S --needed git base-devel && git clone https://aur.archlinux.org/yay.git && cd yay && makepkg -si
+sudo pacman -S less # for Yay PKGBUILD check if not already installed
+yay -S vscodium-bin
 ```
 
+### Kitty (terminal)
 ```bash
-
+sudo pacman -S kitty # already installed by Hyprland
+nano .config/kitty/kitty.conf # paste config from dotfiles
 ```
 
 ```bash
@@ -66,7 +71,7 @@ systemctl --user enable --now hyprpolkitagent.service
 ## TODO: Other
 
 ```bash
-sudo pacman -S pipewire wireplumber xdg-desktop-portal-hyprland discord hyprpaper
+sudo pacman -S pipewire wireplumber xdg-desktop-portal-hyprland discord hyprpaper git
 
 # bash completion with sudo
 # in .basch:
