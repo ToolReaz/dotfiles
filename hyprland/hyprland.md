@@ -86,7 +86,7 @@ nano .config/kitty/kitty.conf # paste config from dotfiles
 ## TODO: Other
 
 ```bash
-sudo pacman -S pipewire wireplumber xdg-desktop-portal-hyprland discord hyprpaper git zip unzip
+sudo pacman -S pipewire wireplumber xdg-desktop-portal-hyprland discord hyprpaper git zip unzip openssh docker docker-compose
 
 # bash completion with sudo
 # in .basch:
