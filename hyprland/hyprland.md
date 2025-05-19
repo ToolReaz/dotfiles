@@ -98,7 +98,7 @@ fi
 sudo pacman -S noto-fonts-emoji noto-fonts-cjk
 
 # file manager
-sudo pacman -S dolphin ffmpegthumbs
+sudo pacman -S dolphin ffmpegthumbs udisks2 udiskie
 
 # screen backlight
 sudo pacman -S brightnessctl
